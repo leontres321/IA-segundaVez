@@ -1,7 +1,7 @@
 CC =g++
 FLAGS =-Wall
 
-FILES =main.o 
+FILES =main.o funciones.o
 OUTPUTS =OUT
 BINARY =out
 
@@ -13,6 +13,8 @@ out: $(FILES)
 main.o: main.cpp
 	$(CC) $(FLAGS) -c main.cpp
 
+funciones.o: funciones.cpp
+	$(CC) $(FLAGS) -c funciones.cpp
 
 clean:
 	rm $(BINARY) $(FILES)
