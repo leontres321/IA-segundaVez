@@ -5,8 +5,8 @@
 #include "Class.h"
 
 void leerArchivo(std::string nombre,
-                 std::vector<Examen> examenes,
-                 std::vector<Alumno> alumnos);
+                 std::vector<Examen>* examenes,
+                 std::vector<Alumno>* alumnos);
 
 int* generarMatriz(std::vector<Examen> examenes);
 
