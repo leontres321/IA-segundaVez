@@ -1,8 +1,8 @@
 CC =g++
 FLAGS =-Wall
 
-FILES =main.o funciones.o
-OUTPUTS =OUT
+FILES =main.o funciones.o SA.o
+OUTPUTS =OUT PROBLEM.RES PROBLEM.SOL PROBLEM.PEN
 BINARY =out
 
 all: $(BINARY)
@@ -16,6 +16,9 @@ main.o: main.cpp
 funciones.o: funciones.cpp
 	$(CC) $(FLAGS) -c funciones.cpp
 
+SA.o: SA.cpp
+	$(CC) $(FLAGS) -c SA.cpp
+
 clean:
 	rm $(BINARY) $(FILES)
 
@@ -23,7 +26,4 @@ delete:
 	rm -rf $(OUTPUTS)
 
 run:
-	@./$(BINARY) $(CASE)
-
-test:
-	@timeout -s 2 5m ./$(BINARY) $(CASE)
+	@./$(BINARY) $(CASE) $(DEBUG)

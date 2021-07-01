@@ -6,7 +6,7 @@
 using namespace std;
 
 void leerArchivo(string nombre,
-                 vector<Examen>* examenes,
+                 vector<int>* examenes,
                  vector<Alumno>* alumnos){
 
     ifstream archivoEXM (nombre + ".exm");
@@ -18,10 +18,7 @@ void leerArchivo(string nombre,
     if (archivoEXM.is_open() && archivoSTU.is_open()){
         //Leera hasta dejar el archivo vacio
         while (archivoEXM >> lectura1 >> lectura2){
-            Examen newExamen;
-            newExamen.id = stoi(lectura1);
-            newExamen.cantAlumnos = stoi(lectura2);
-            examenes->push_back(newExamen);
+            examenes->push_back(stoi(lectura1));
         }
 
         while (archivoSTU >> lectura1 >> lectura2){
@@ -48,19 +45,36 @@ void leerArchivo(string nombre,
     }
 }
 
-int* generarMatriz(std::vector<Examen> examenes){
-   int* matriz = nullptr;
+vector<vector<int>> generarMatriz(vector<int> examenes){
+    vector<vector<int>> conflictos;
 }
 
-bool tomarDecision(float cambiar, int tiempo){
-    //exp(delta/tiempo)
-    return true;
+float ultimoTimeslot(vector<int> x){
+    int max = -1;
+    for (auto i: x){
+       if (i > max) max = i;
+    }
+    return max;
 }
 
-void solucionInicial(){
+void escribirSalida(int ultimoTimeslot, vector<int> examenes, float penalizacion, vector<int> solucion){
+    //Codigo donde sale todo bien, hay que ver la parte donde no se completa una solucion
+    //quiza el greedy no encuentra solucion y hay que imprimir algo especial
+    //TODO: Quizas tener un flag de si es abierto por segunda vez hacer apend a los archivos que estan aca
 
-}
+    ofstream dotRES ("PROBLEM.RES");
+    ofstream dotSOL ("PROBLEMA.SOL");
+    ofstream dotPEN ("PROBLEMA.PEN");
 
-float enfriamiento(float tempActual, float alpha){
-    return tempActual * alpha;
+    dotRES << ultimoTimeslot;
+    dotPEN << penalizacion;
+
+
+    for (unsigned int i = 0; i < examenes.size(); i++){
+        dotSOL << examenes[i] << " " << solucion[i] << endl;
+    }
+
+    dotRES.close();
+    dotSOL.close();
+    dotPEN.close();
 }

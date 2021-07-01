@@ -2,6 +2,7 @@
 #include <vector>
 #include "funciones.h"
 #include "Class.h"
+#include "SA.h"
 
 using namespace std;
 
@@ -9,10 +10,11 @@ int main(int argc, char** argv){
     int tiempo = 50; //numero de prueba
     float temperatura = 100; //numero de prueba
     float alpha = 0.85; //numero de prueba
+    int iteraciones = 10; //numero de prueba
 
     vector<int> x;
     vector<Alumno> alumnos;
-    vector<Examen> examenes;
+    vector<int> examenes;
 
     bool debug = false;
 
@@ -30,17 +32,17 @@ int main(int argc, char** argv){
 
     leerArchivo(argv[1], &examenes, &alumnos);
 
-    if (string(argv[2]) == "--debug" || string(argv[2]) == "-d"){
+    if (argc == 3 && (string(argv[2]) == "--debug" || string(argv[2]) == "-d")){
         debug = true;
-        cout << "Examenes id: " << examenes[iDebug].id << "| Cant.Alum.: " << examenes[iDebug].cantAlumnos << endl;
+        cout << "Examenes id: " << examenes[iDebug] << "| Cant.Total: " << examenes.size() << endl;
         cout << "Alumno id: " << alumnos[iDebug].id << "| Cant.Exm: " << alumnos[iDebug].examenes.size() << endl;
         for (auto i = alumnos[iDebug].examenes.begin(); i != alumnos[iDebug].examenes.end(); i++){
             cout << "Id examen: " << *i << endl;
         }
     }
-/*
+
     for (int i = 0; i < tiempo; i++){
-        for (int j = 0; j < 99; j++){
+        for (int j = 0; j < iteraciones; j++){
             //Seleccionar un nuevo punto (Sn)
             //if (nuevoPunto es mejor)
             //    Sc <- Sn
@@ -50,7 +52,8 @@ int main(int argc, char** argv){
             //    Sbest <- Sc
 
         }
+        //bajar temperatura
+        temperatura = enfriamiento(temperatura, alpha);
     }
-*/
     return 0;
 }

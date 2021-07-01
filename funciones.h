@@ -5,15 +5,16 @@
 #include "Class.h"
 
 void leerArchivo(std::string nombre,
-                 std::vector<Examen>* examenes,
+                 std::vector<int>* examenes,
                  std::vector<Alumno>* alumnos);
 
-int* generarMatriz(std::vector<Examen> examenes);
+std::vector<std::vector<int>> generarMatriz(std::vector<int> examenes);
 
-bool tomarDecision(float cambiar, int tiempo);
+float ultimoTimeslot(std::vector<int> x);
 
-void solucionInicial();
-
-float enfriamiento(float tempActual);
+void escribirSalida(int ultimoTimeslot,
+                    std::vector<int> examenes,
+                    float penalizacion,
+                    std::vector<int> solucion);
 
 #endif // FUNCIONES_H_

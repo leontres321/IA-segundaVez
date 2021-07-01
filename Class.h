@@ -6,16 +6,18 @@
 ** "Clases"
  */
 //*.exm
-class Examen{
+/*class Examen{
     public:
         int id;
-        int cantAlumnos;
+        int cantAlumnos; //Necesario?
 };
+*/
+
 
 //*.stu
 class Alumno{
     public:
-        std::string id; //debe ser un string
+        std::string id;
         std::vector<int> examenes;
 };
 
