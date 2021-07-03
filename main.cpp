@@ -24,7 +24,7 @@ int main(int argc, char** argv){
 
     int loopMatriz = 6;
     int iDebug = 1;
-    unsigned int loopX = 10;
+    int loopX = 10;
 
     if (argc < 2){
         cout << "**********" << endl;
