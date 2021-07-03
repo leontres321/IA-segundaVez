@@ -20,4 +20,8 @@ void escribirSalida(int ultimoTimeslot,
 
 int encontrarIndex(std::vector<int> examenes, int codigo);
 
+float calcularDescontento(std::vector<int> solucion,
+                          std::vector<int> examenes,
+                          std::vector<Alumno> alumnos);
+
 #endif // FUNCIONES_H_

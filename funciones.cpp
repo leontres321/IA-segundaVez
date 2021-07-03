@@ -1,5 +1,6 @@
 #include <iostream>
 #include <fstream>
+#include <math.h>
 #include "funciones.h"
 #include "Class.h"
 
@@ -104,4 +105,29 @@ int encontrarIndex(vector<int> examenes, int codigo){
     }
     // podria poner un codigo mas decente
     return -1;
+}
+
+float calcularDescontento(vector<int> solucion, vector<int> examenes, vector<Alumno> alumnos){
+    float descontento = 0;
+    int indexExamen1, indexExamen2, slot1, slot2, diferencia;
+
+    for (auto x: alumnos){
+        if (x.examenes.size() > 1){
+            for (unsigned int i = 0; i < x.examenes.size(); i++){
+                indexExamen1 = encontrarIndex(examenes, x.examenes[i]);
+                slot1 = solucion[indexExamen1];
+                for (unsigned int j = i + 1; j < x.examenes.size(); j++){
+                    indexExamen2 = encontrarIndex(examenes, x.examenes[j]);
+                    slot2 = solucion[indexExamen2];
+                    diferencia = abs(slot1-slot2);
+
+                    if (diferencia >= 1 && diferencia <= 5){
+                        descontento += pow(2, 5 - diferencia);
+                    }
+
+                }
+            }
+        }
+    }
+    return descontento/alumnos.size();
 }

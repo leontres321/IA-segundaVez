@@ -12,7 +12,7 @@ int main(int argc, char** argv){
     float alpha = 0.85; //numero de prueba
     int iteraciones = 10; //numero de prueba
 
-    int descontento;
+    float descontento;
     int W;
 
     vector<int> x;
@@ -66,10 +66,11 @@ int main(int argc, char** argv){
      W = ultimoTimeslot(x);
 
      //TODO: calcular descontento
+     descontento = calcularDescontento(x, examenes, alumnos);
 
      if (debug){
          cout << "W: " << W << endl;
-         //cout << "Descontento: " << descontento << endl;
+         cout << "Descontento promedio: " << descontento << endl;
          for (int i = 0; i < loopX; i++){
              cout << x[i] << " ";
          }

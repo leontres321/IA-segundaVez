@@ -14,7 +14,7 @@
 */
 
 
-//*.stu
+//*.stu ... esta clase no es necesaria verdad? un vector de vectores y listo
 class Alumno{
     public:
         std::string id;
