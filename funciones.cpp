@@ -45,8 +45,27 @@ void leerArchivo(string nombre,
     }
 }
 
-vector<vector<int>> generarMatriz(vector<int> examenes){
-    vector<vector<int>> conflictos;
+vector<vector<int>> generarMatriz(vector<int> examenes,
+                                  vector<Alumno> alumnos){
+    vector<int> listaExamenes (examenes.size());
+    vector<vector<int>> conflictos (examenes.size(), listaExamenes);
+    int index1, index2;
+
+    //not nice
+    for (auto x: alumnos){
+        for (auto exm: x.examenes){
+            index1 = encontrarIndex(examenes, exm);
+            for (auto exm2: x.examenes){
+                if (exm != exm2){
+                    index2 = encontrarIndex(examenes, exm2);
+                    conflictos[index1][index2] = 1;
+                    conflictos[index2][index1] = 1;
+                }
+            }
+        }
+    }
+
+    return conflictos;
 }
 
 float ultimoTimeslot(vector<int> x){
@@ -77,4 +96,12 @@ void escribirSalida(int ultimoTimeslot, vector<int> examenes, float penalizacion
     dotRES.close();
     dotSOL.close();
     dotPEN.close();
+}
+
+int encontrarIndex(vector<int> examenes, int codigo){
+    for (unsigned int i = 0; i < examenes.size(); i++){
+        if (codigo == examenes[i]) return i;
+    }
+    // podria poner un codigo mas decente
+    return -1;
 }

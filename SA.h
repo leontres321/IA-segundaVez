@@ -2,10 +2,13 @@
 #define SA_H
 #include <iostream>
 #include <vector>
+#include "Class.h"
 
 bool tomarDecision(float cambiar, int tiempo);
 
-void solucionInicial(std::vector<int> soluciones);
+std::vector<int> solucionInicial(std::vector<int> soluciones,
+                                              std::vector<Alumno> alumnos,
+                                              std::vector<int> examenes);
 
 float enfriamiento(float tempActual, float alpha);
 

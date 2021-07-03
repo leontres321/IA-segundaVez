@@ -1,6 +1,7 @@
 #include <iostream>
 #include <vector>
 #include "SA.h"
+#include "Class.h"
 
 using namespace std;
 
@@ -9,7 +10,7 @@ bool tomarDecision(float cambiar, int tiempo){
     return true;
 }
 
-void solucionInicial(vector<int> soluciones){
+vector<int> solucionInicial(vector<int> soluciones, vector<Alumno> alumnos, vector<int> examenes){
     //Algoritmo greedy
 
 }
@@ -17,3 +18,7 @@ void solucionInicial(vector<int> soluciones){
 float enfriamiento(float tempActual, float alpha){
     return tempActual * alpha;
 }
+
+
+
+
