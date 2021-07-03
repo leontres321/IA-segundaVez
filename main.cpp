@@ -12,13 +12,19 @@ int main(int argc, char** argv){
     float alpha = 0.85; //numero de prueba
     int iteraciones = 10; //numero de prueba
 
+    int descontento;
+    int W;
+
     vector<int> x;
     vector<Alumno> alumnos;
     vector<int> examenes;
+    vector<vector<int>> conflictos;
 
     bool debug = false;
 
+    int loopMatriz = 6;
     int iDebug = 1;
+    unsigned int loopX = 10;
 
     if (argc < 2){
         cout << "**********" << endl;
@@ -30,6 +36,9 @@ int main(int argc, char** argv){
         exit(0);
     }
 
+    //Para tener numeros "random"
+    srand ( time(NULL) );
+
     leerArchivo(argv[1], &examenes, &alumnos);
 
     if (argc == 3 && (string(argv[2]) == "--debug" || string(argv[2]) == "-d")){
@@ -40,6 +49,32 @@ int main(int argc, char** argv){
             cout << "Id examen: " << *i << endl;
         }
     }
+
+    conflictos = generarMatriz(examenes, alumnos);
+
+    if (debug){
+        for (int i = 0; i < loopMatriz; i++){
+            for (int j = 0; j < loopMatriz; j++){
+                cout << conflictos[i][j] << " ";
+            }
+            cout << endl;
+        }
+    }
+
+     x = solucionInicial(conflictos, examenes);
+
+     W = ultimoTimeslot(x);
+
+     //TODO: calcular descontento
+
+     if (debug){
+         cout << "W: " << W << endl;
+         //cout << "Descontento: " << descontento << endl;
+         for (int i = 0; i < loopX; i++){
+             cout << x[i] << " ";
+         }
+         cout << endl;
+     }
 
     for (int i = 0; i < tiempo; i++){
         for (int j = 0; j < iteraciones; j++){

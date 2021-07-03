@@ -4,11 +4,22 @@
 #include <vector>
 #include "Class.h"
 
-bool tomarDecision(float cambiar, int tiempo);
+/*
+ *  Parte greedy
+ */
 
-std::vector<int> solucionInicial(std::vector<int> soluciones,
-                                              std::vector<Alumno> alumnos,
-                                              std::vector<int> examenes);
+std::vector<int> solucionInicial(std::vector<std::vector<int>> conflictos,
+                                 std::vector<int> examenes);
+
+int movimientoGreedy(std::vector<std::vector<int>> conflictos,
+                     std::vector<int> solucion,
+                     unsigned int iterador);
+
+/*
+ *  Parte Simulated Annealing
+ */
+
+bool tomarDecision(int WActual, int WNuevo, int tiempo);
 
 float enfriamiento(float tempActual, float alpha);
 

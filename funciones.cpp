@@ -68,12 +68,12 @@ vector<vector<int>> generarMatriz(vector<int> examenes,
     return conflictos;
 }
 
-float ultimoTimeslot(vector<int> x){
-    int max = -1;
-    for (auto i: x){
-       if (i > max) max = i;
+int ultimoTimeslot(vector<int> x){
+    int W = -1;
+    for (unsigned int i = 0; i < x.size(); i++){
+       if (x[i] > W) W = x[i];
     }
-    return max;
+    return W;
 }
 
 void escribirSalida(int ultimoTimeslot, vector<int> examenes, float penalizacion, vector<int> solucion){

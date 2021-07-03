@@ -11,7 +11,7 @@ void leerArchivo(std::string nombre,
 std::vector<std::vector<int>> generarMatriz(std::vector<int> examenes,
                                             std::vector<Alumno> alumnos);
 
-float ultimoTimeslot(std::vector<int> x);
+int ultimoTimeslot(std::vector<int> x);
 
 void escribirSalida(int ultimoTimeslot,
                     std::vector<int> examenes,
