@@ -7,13 +7,24 @@
 using namespace std;
 
 int main(int argc, char** argv){
-    int tiempo = 50; //numero de prueba
+    int tiempo = 25; //numero de prueba
     float temperatura = 100; //numero de prueba
     float alpha = 0.85; //numero de prueba
     int iteraciones = 10; //numero de prueba
 
     float descontento;
     int W;
+
+    //Para moverse
+    int examenAzar;
+    float nuevoDescontento;
+    int nuevoW;
+    vector<int> nuevoX;
+
+    //best
+    vector<int> mejorX;
+    float mejorDescontento;
+    int mejorW;
 
     vector<int> x;
     vector<Alumno> alumnos;
@@ -53,20 +64,25 @@ int main(int argc, char** argv){
     conflictos = generarMatriz(examenes, alumnos);
 
     if (debug){
+        cout << "Matriz: " << endl;
         for (int i = 0; i < loopMatriz; i++){
             for (int j = 0; j < loopMatriz; j++){
                 cout << conflictos[i][j] << " ";
             }
             cout << endl;
         }
+        cout << "-------------" << endl;
     }
 
+    //Valores iniciales
      x = solucionInicial(conflictos, examenes);
-
      W = ultimoTimeslot(x);
-
-     //TODO: calcular descontento
      descontento = calcularDescontento(x, examenes, alumnos);
+
+     //Guardarla como mejor solucion
+     mejorX = vector<int> (x);
+     mejorW = W;
+     mejorDescontento = descontento;
 
      if (debug){
          cout << "W: " << W << endl;
@@ -80,16 +96,67 @@ int main(int argc, char** argv){
     for (int i = 0; i < tiempo; i++){
         for (int j = 0; j < iteraciones; j++){
             //Seleccionar un nuevo punto (Sn)
-            //if (nuevoPunto es mejor)
-            //    Sc <- Sn
-            //else if random([0,1]) < eVal
-            //   Sc <- Sn
-            //if Sc es mejor que Sbest
-            //    Sbest <- Sc
+            examenAzar = rand() % examenes.size();
+
+            //Movimiento
+            nuevoX = moverse(x, examenAzar);
+
+            //Revisar si es factible
+            if (!solucionValida(conflictos, x, examenAzar)){
+                //solucion no es valida, se debe continuar
+                continue;
+            }
+
+            nuevoDescontento = calcularDescontento(nuevoX, examenes, alumnos);
+            nuevoW = ultimoTimeslot(nuevoX);
+
+            if (nuevoW > W){
+                //la solucion minimiza los bloques
+                x = nuevoX;
+                W = nuevoW;
+                descontento = nuevoDescontento;
+            }
+            else if (nuevoW == W && nuevoDescontento < descontento){
+                //no minimiza bloques pero ayuda a bajar el descontento
+                x = nuevoX;
+                descontento = nuevoDescontento;
+            }
+            else if (tomarDecision(W, nuevoW, tiempo)){
+                //La solucion empeora W y hay que ver si es aceptada
+                x = nuevoX;
+                W = nuevoW;
+                descontento = nuevoDescontento;
+            }
+
+            //Las solucion encontrada es mejor que la mejor
+            if (W > mejorW){
+                mejorW = W;
+                mejorX = x;
+                mejorDescontento = descontento;
+            }
+            else if (W == mejorW && descontento < mejorDescontento){
+                mejorX = x;
+                mejorDescontento = descontento;
+            }
 
         }
         //bajar temperatura
         temperatura = enfriamiento(temperatura, alpha);
     }
+
+    //escribir archivos
+    if (debug){
+         cout << "-------------" << endl;
+         cout << "Solucion encontrada:" << endl;
+         cout << "W: " << mejorW << endl;
+         cout << "Descontento promedio: " << mejorDescontento << endl;
+         for (int i = 0; i < loopX; i++){
+             cout << mejorX[i] << " ";
+         }
+         cout << endl;
+    }
+
+    escribirSalida(mejorW, examenes, mejorDescontento, mejorX);
+
     return 0;
 }

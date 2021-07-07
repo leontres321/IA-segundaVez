@@ -77,7 +77,7 @@ int ultimoTimeslot(vector<int> x){
     return W;
 }
 
-void escribirSalida(int ultimoTimeslot, vector<int> examenes, float penalizacion, vector<int> solucion){
+void escribirSalida(int ultimoTimeslot, vector<int> examenes, float descontento, vector<int> solucion){
     //Codigo donde sale todo bien, hay que ver la parte donde no se completa una solucion
     //quiza el greedy no encuentra solucion y hay que imprimir algo especial
     //TODO: Quizas tener un flag de si es abierto por segunda vez hacer apend a los archivos que estan aca
@@ -87,7 +87,7 @@ void escribirSalida(int ultimoTimeslot, vector<int> examenes, float penalizacion
     ofstream dotPEN ("PROBLEMA.PEN");
 
     dotRES << ultimoTimeslot;
-    dotPEN << penalizacion;
+    dotPEN << descontento;
 
 
     for (unsigned int i = 0; i < examenes.size(); i++){

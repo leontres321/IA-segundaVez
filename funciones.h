@@ -15,7 +15,7 @@ int ultimoTimeslot(std::vector<int> x);
 
 void escribirSalida(int ultimoTimeslot,
                     std::vector<int> examenes,
-                    float penalizacion,
+                    float descontento,
                     std::vector<int> solucion);
 
 int encontrarIndex(std::vector<int> examenes, int codigo);

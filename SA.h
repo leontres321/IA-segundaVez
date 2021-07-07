@@ -23,6 +23,9 @@ bool tomarDecision(int WActual, int WNuevo, int tiempo);
 
 float enfriamiento(float tempActual, float alpha);
 
-void moverse();
+std::vector<int> moverse(std::vector<int> solucionAntigua,
+                         int examenAzar);
+
+bool solucionValida(std::vector<std::vector<int>> conflictos, std::vector<int> solucion, int examenAzar);
 
 #endif // SA_H
