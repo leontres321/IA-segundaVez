@@ -4,13 +4,15 @@
 #include "Class.h"
 #include "SA.h"
 
+#include <chrono>
+
 using namespace std;
 
 int main(int argc, char** argv){
-    int tiempo = 25; //numero de prueba
-    float temperatura = 100; //numero de prueba
-    float alpha = 0.85; //numero de prueba
-    int iteraciones = 10; //numero de prueba
+    int tiempo;
+    float temperatura;
+    float alpha;
+    int iteraciones;
 
     float descontento;
     int W;
@@ -37,22 +39,30 @@ int main(int argc, char** argv){
     int iDebug = 1;
     int loopX = 10;
 
-    if (argc < 2){
+    //tiempos
+
+    auto started = chrono::high_resolution_clock::now();
+
+    if (argc < 7){
         cout << "**********" << endl;
         cout << "Para poder utilizar correctamente este ejecutable es necesario entregar un valor a CASE." << endl;
-        cout << "Ejemplos: make run CASE=Instances/Caso1" << endl;
-        cout << "          ./out Instances/Caso1" << endl;
+        cout << "Ejemplos: make run CASE=Instances/Caso1 DEBUG=-n TIME=10 TEMP=10 ALPHA=0.6 ITER=55" << endl;
+        cout << "          ./out Instances/Caso1 -n 10 10 0.6 55" << endl;
         cout << "No poner el formato para los archivos." << endl;
         cout << "**********" << endl;
         exit(0);
     }
 
+    tiempo = stoi(argv[3]); //numero de prueba
+    temperatura = stof(argv[4]); //numero de prueba
+    alpha = stof(argv[5]); //numero de prueba
+    iteraciones = stoi(argv[6]); //numero de prueba
     //Para tener numeros "random"
     srand ( time(NULL) );
 
     leerArchivo(argv[1], &examenes, &alumnos);
 
-    if (argc == 3 && (string(argv[2]) == "--debug" || string(argv[2]) == "-d")){
+    if (argc >= 3 && (string(argv[2]) == "--debug" || string(argv[2]) == "-d")){
         debug = true;
         cout << "Examenes id: " << examenes[iDebug] << "| Cant.Total: " << examenes.size() << endl;
         cout << "Alumno id: " << alumnos[iDebug].id << "| Cant.Exm: " << alumnos[iDebug].examenes.size() << endl;
@@ -64,6 +74,12 @@ int main(int argc, char** argv){
     conflictos = generarMatriz(examenes, alumnos);
 
     if (debug){
+        cout << "-------------" << endl;
+        cout << "Tiempo: " << tiempo << endl;
+        cout << "Temperatura: " << temperatura << endl;
+        cout << "Alpha: " << alpha << endl;
+        cout << "Iteraciones: " << iteraciones << endl;
+        cout << "-------------" << endl;
         cout << "Matriz: " << endl;
         for (int i = 0; i < loopMatriz; i++){
             for (int j = 0; j < loopMatriz; j++){
@@ -102,7 +118,7 @@ int main(int argc, char** argv){
             nuevoX = moverse(x, examenAzar);
 
             //Revisar si es factible
-            if (!solucionValida(conflictos, x, examenAzar)){
+            if (!solucionValida(conflictos, nuevoX, examenAzar)){
                 //solucion no es valida, se debe continuar
                 continue;
             }
@@ -110,7 +126,7 @@ int main(int argc, char** argv){
             nuevoDescontento = calcularDescontento(nuevoX, examenes, alumnos);
             nuevoW = ultimoTimeslot(nuevoX);
 
-            if (nuevoW > W){
+            if (nuevoW < W){
                 //la solucion minimiza los bloques
                 x = nuevoX;
                 W = nuevoW;
@@ -129,7 +145,7 @@ int main(int argc, char** argv){
             }
 
             //Las solucion encontrada es mejor que la mejor
-            if (W > mejorW){
+            if (W < mejorW){
                 mejorW = W;
                 mejorX = x;
                 mejorDescontento = descontento;
@@ -157,6 +173,10 @@ int main(int argc, char** argv){
     }
 
     escribirSalida(mejorW, examenes, mejorDescontento, mejorX);
+
+    auto done = chrono::high_resolution_clock::now();
+
+    cout << "Tiempo ejecucion: " << chrono::duration_cast<chrono::milliseconds>(done-started).count() << "ms" << endl;
 
     return 0;
 }

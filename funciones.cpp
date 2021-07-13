@@ -83,8 +83,8 @@ void escribirSalida(int ultimoTimeslot, vector<int> examenes, float descontento,
     //TODO: Quizas tener un flag de si es abierto por segunda vez hacer apend a los archivos que estan aca
 
     ofstream dotRES ("PROBLEM.RES");
-    ofstream dotSOL ("PROBLEMA.SOL");
-    ofstream dotPEN ("PROBLEMA.PEN");
+    ofstream dotSOL ("PROBLEM.SOL");
+    ofstream dotPEN ("PROBLEM.PEN");
 
     dotRES << ultimoTimeslot;
     dotPEN << descontento;

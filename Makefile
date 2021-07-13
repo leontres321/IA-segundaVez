@@ -26,4 +26,4 @@ delete:
 	rm -rf $(OUTPUTS)
 
 run:
-	@./$(BINARY) $(CASE) $(DEBUG)
+	@./$(BINARY) $(CASE) $(DEBUG) $(TIME) $(TEMP) $(ALPHA) $(ITER)

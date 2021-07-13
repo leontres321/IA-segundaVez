@@ -60,6 +60,7 @@ vector<int> moverse(vector<int> solucionAntigua, int examenAzar){
 
 
 bool solucionValida(vector<vector<int>> conflictos, vector<int> solucion, int examenAzar){
+    if (solucion[examenAzar] < 1) return false;
     //se revisa solo respecto al cambio porque el resto sigue siendo valido
     for (unsigned int i = 0; i < conflictos[examenAzar].size(); i++){
         //Si ambos examenes tienen conflicto y estan en el mismo bloque
